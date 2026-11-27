@@ -60,6 +60,7 @@ for (const relative of all) {
     if (built && relative !== '404.html') {
       requireThat(Boolean(baseMatch), 'Missing deployment base in ' + relative);
       requireThat(html.includes('data-adop-pages-path'), 'Missing route bootstrap in ' + relative);
+      requireThat(html.includes('data-adop-local-fragments'), 'Missing current-document fragment binding in ' + relative);
     }
     for (const match of html.matchAll(/\b(?:src|href|poster)\s*=\s*["']([^"']+)["']/gi)) localFile(match[1], documentURL, relative);
   }
@@ -81,6 +82,34 @@ for (const route of manifest.routes) {
       vm.runInNewContext(script, { location, history: { state: null, replaceState: (...args) => { replaced = args[2]; } } });
       requireThat(replaced === location.pathname.slice(0, -1) + location.search + location.hash, 'Route normalization loses query or fragment: ' + route.route);
     }
+  }
+}
+
+if (built) {
+  const html = await readFile(path.join(site, 'anasayfa', 'index.html'), 'utf8');
+  const script = html.match(/<script data-adop-local-fragments>([\s\S]*?)<\/script>/)?.[1];
+  requireThat(Boolean(script), 'Missing fragment regression fixture script.');
+  if (script) {
+    const listeners = new Map();
+    const anchor = { attributes: { href: '#home-content' }, getAttribute(name) { return this.attributes[name] ?? null; }, setAttribute(name, value) { this.attributes[name] = value; }, setAttributeNS(namespace, name, value) { this.setAttribute(name, value); } };
+    const use = { ...anchor, attributes: { href: '#home-life-boxes' } };
+    const xlink = { ...anchor, attributes: { 'xlink:href': '#legacy-symbol' } };
+    const declaration = { values: { filter: 'url(#local-filter)', transform: 'translateX(10px)' }, length: 2, item(index) { return ['filter', 'transform'][index]; }, getPropertyValue(name) { return this.values[name]; }, getPropertyPriority() { return ''; }, setProperty(name, value) { this.values[name] = value; } };
+    const location = { href: origin + base + 'anasayfa?wall=297.4#intro' };
+    const history = { pushState(state, title, value) { location.href = new URL(value, location.href).href; }, replaceState(state, title, value) { location.href = new URL(value, location.href).href; } };
+    const document = { readyState: 'loading', styleSheets: [], querySelectorAll(selector) { return selector === '[style]' ? [{ style: declaration }] : [anchor, use, xlink]; }, addEventListener(name, listener) { listeners.set(name, listener); } };
+    const window = { addEventListener(name, listener) { listeners.set(name, listener); } };
+    vm.runInNewContext(script, { document, window, location, history, URL, Map, WeakMap });
+    listeners.get('DOMContentLoaded')();
+    const expected = origin + base + 'anasayfa?wall=297.4';
+    requireThat(anchor.attributes.href === expected + '#home-content', 'Skip link must stay on current alias and query.');
+    requireThat(use.attributes.href === expected + '#home-life-boxes', 'SVG use must stay on current alias and query.');
+    requireThat(xlink.attributes['xlink:href'] === expected + '#legacy-symbol', 'SVG xlink must stay on current alias and query.');
+    requireThat(declaration.values.filter === 'url("' + expected + '#local-filter")', 'CSS fragment must stay on current alias and query.');
+    requireThat(declaration.values.transform === 'translateX(10px)', 'Fragment fix must retain unrelated style declarations.');
+    history.replaceState(null, '', base + 'anasayfa?wall=310#new');
+    requireThat(anchor.attributes.href === origin + base + 'anasayfa?wall=310#home-content', 'Fragment links must follow updated configurator queries.');
+    requireThat(use.attributes.href === origin + base + 'anasayfa?wall=310#home-life-boxes', 'SVG fragments must follow updated configurator queries.');
   }
 }
 
@@ -106,4 +135,4 @@ for (const item of gallery) {
 }
 if (built) requireThat(known.has('.nojekyll'), 'Missing .nojekyll.');
 if (failures.length) { console.error(JSON.stringify({ ok: false, base, counts, failures }, null, 2)); process.exitCode = 1; }
-else console.log(JSON.stringify({ ok: true, target: built ? '_site/' : 'web/', base, counts, routes: manifest.routes.length, checks: ['local references', 'JavaScript syntax', '500 gallery items and 1500 WebP signatures', 'source copy integrity', ...(built ? ['extensionless route query/fragment preservation'] : [])] }, null, 2));
+else console.log(JSON.stringify({ ok: true, target: built ? '_site/' : 'web/', base, counts, routes: manifest.routes.length, checks: ['local references', 'JavaScript syntax', '500 gallery items and 1500 WebP signatures', 'source copy integrity', ...(built ? ['extensionless route query/fragment preservation', 'current-document skip/SVG/CSS fragments after query changes'] : [])] }, null, 2));

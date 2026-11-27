@@ -50,12 +50,78 @@ const sourceFiles = await files(output);
 const pages = sourceFiles.filter(file => file.endsWith('.html'));
 const routes = [];
 
+// A <base> makes a bare fragment resolve against that base instead of the current
+// HTML page. Keep skip links, inline SVG <use>, and local CSS filters on the actual
+// document, including when the configurator changes its query with history APIs.
+function bindDocumentFragments() {
+  const links = [], styles = [];
+  const seenLinks = new WeakMap(), seenStyles = new WeakMap();
+  const cssFragment = /url\(\s*(["']?)(#[^\s"')]+)\1\s*\)/gi;
+  const urlFor = fragment => new URL(fragment, location.href).href;
+  function registerLink(element, attribute) {
+    const fragment = element.getAttribute(attribute);
+    if (!fragment || !fragment.startsWith('#')) return;
+    let attributes = seenLinks.get(element);
+    if (!attributes) { attributes = new Map(); seenLinks.set(element, attributes); }
+    if (attributes.has(attribute)) { attributes.get(attribute).fragment = fragment; return; }
+    const binding = { element, attribute, fragment };
+    attributes.set(attribute, binding); links.push(binding);
+  }
+  function registerStyle(declaration) {
+    if (!declaration) return;
+    let properties = seenStyles.get(declaration);
+    if (!properties) { properties = new Map(); seenStyles.set(declaration, properties); }
+    for (let index = 0; index < declaration.length; index++) {
+      const property = declaration.item(index), source = declaration.getPropertyValue(property);
+      cssFragment.lastIndex = 0;
+      if (!cssFragment.test(source)) continue;
+      if (properties.has(property)) { properties.get(property).source = source; continue; }
+      const binding = { declaration, property, source, priority: declaration.getPropertyPriority(property) };
+      properties.set(property, binding); styles.push(binding);
+    }
+  }
+  function registerRules(rules) {
+    for (const rule of rules) { registerStyle(rule.style); if (rule.cssRules) registerRules(rule.cssRules); }
+  }
+  function refresh() {
+    for (const binding of links) {
+      const value = urlFor(binding.fragment);
+      if (binding.attribute === 'xlink:href') binding.element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', value);
+      else binding.element.setAttribute(binding.attribute, value);
+    }
+    for (const binding of styles) {
+      cssFragment.lastIndex = 0;
+      const value = binding.source.replace(cssFragment, (_, quote, fragment) => 'url("' + urlFor(fragment) + '")');
+      binding.declaration.setProperty(binding.property, value, binding.priority);
+    }
+  }
+  function collect() {
+    for (const element of document.querySelectorAll('[href],[xlink\\:href]')) { registerLink(element, 'href'); registerLink(element, 'xlink:href'); }
+    for (const element of document.querySelectorAll('[style]')) registerStyle(element.style);
+    for (const sheet of document.styleSheets) {
+      // Cross-origin font stylesheets are deliberately left alone.
+      try { registerRules(sheet.cssRules); } catch {}
+    }
+    refresh();
+  }
+  for (const method of ['pushState', 'replaceState']) {
+    const original = history[method];
+    history[method] = function (...args) { const result = original.apply(this, args); refresh(); return result; };
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', collect, { once: true });
+  else collect();
+  window.addEventListener('pageshow', collect);
+  window.addEventListener('popstate', collect);
+  window.addEventListener('hashchange', collect);
+  document.addEventListener('click', refresh, true);
+}
+
 function pageHead(directory) {
   const pageBase = base + (directory === '.' ? '' : directory + '/');
   // Aliases are physical directories on Pages. Normalize only their address before
   // the retained application reads pathname; keep every query and fragment intact.
   const bootstrap = `(function(){var b=${JSON.stringify(base)},p=location.pathname;if(p.indexOf(b)!==0)return;var r=p.slice(b.length);if(/^(?:v2\\/)?(?:anasayfa|moduller|modul|kombinasyonlar|ilham|gorunum)\\/$/.test(r)){history.replaceState(history.state,'',p.slice(0,-1)+location.search+location.hash);}})();`;
-  return `<base href="${pageBase}"><script data-adop-pages-path>${bootstrap}</script>`;
+  return `<base href="${pageBase}"><script data-adop-pages-path>${bootstrap}</script><script data-adop-local-fragments>(${bindDocumentFragments.toString()})();</script>`;
 }
 
 for (const page of pages) {
