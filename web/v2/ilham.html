@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8f8f6">
+  <title>İlham — ADØP</title>
+  <meta name="description" content="Farklı ölçüler, renkler ve düzenler. ADØP kombinasyonlarından ilham al, seçtiğin düzeni kendi alanına uyarla.">
+  <link rel="stylesheet" href="style.css?v=tv-model-database-3">
+  <link rel="stylesheet" href="navigation.css?v=fit-motion-1">
+  <link rel="stylesheet" href="customer-site.css?v=inspiration-1">
+  <link rel="stylesheet" href="../inspiration.css?v=inspiration-1">
+  <link rel="stylesheet" href="../viewport-switch.css?v=viewport-switch-1">
+  <script src="../viewport-switch.js?v=inspiration-1"></script>
+</head>
+<body class="inspiration-page studio-v2" data-design-base="index.html">
+  <a class="site-skip" href="#inspiration-content">İçeriğe geç</a>
+  <header class="site-header">
+    <a href="anasayfa.html" class="site-brand" aria-label="ADØP ana sayfa">ADØP</a>
+    <nav class="site-nav" aria-label="Ana menü">
+      <a href="anasayfa.html">Ana sayfa</a>
+      <a href="moduller.html">Modüller</a>
+      <a href="kombinasyonlar.html">Kombinasyonlar</a>
+      <a href="ilham.html" aria-current="page">İlham</a>
+      <a href="index.html" class="site-design-link">Kendin tasarla</a>
+    </nav>
+    <button type="button" class="site-menu-toggle" aria-label="Ana menüyü aç"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg><span>Menü</span></button>
+  </header>
+
+  <main id="inspiration-content" class="inspiration-main" tabindex="-1">
+    <div class="inspiration-heading">
+      <h1>İlham.</h1>
+      <span id="inspiration-total" class="inspiration-total"></span>
+    </div>
+
+    <form id="inspiration-filters" class="inspiration-filters" aria-label="İlham filtreleri">
+      <label class="inspiration-filter" for="inspiration-finish"><span>Renk</span><select id="inspiration-finish" name="finish"><option value="">Tüm renkler</option></select></label>
+      <label class="inspiration-filter" for="inspiration-palette"><span>Renk düzeni</span><select id="inspiration-palette" name="palette"><option value="">Tümü</option><option value="mono">Tek renk</option><option value="duo">İki renk</option></select></label>
+      <label class="inspiration-filter" for="inspiration-span"><span>Tabla</span><select id="inspiration-span" name="span"><option value="">Tümü</option><option value="yes">Tablalı</option><option value="no">Tablasız</option></select></label>
+      <label class="inspiration-filter" for="inspiration-width"><span>Genişlik</span><select id="inspiration-width" name="width"><option value="">Tüm ölçüler</option><option value="to180">180 cm ve altı</option><option value="180to240">180–240 cm</option><option value="240to300">240–300 cm</option><option value="over300">300 cm üzeri</option></select></label>
+      <button id="inspiration-reset" class="inspiration-reset" type="reset" hidden>Filtreleri temizle <span aria-hidden="true">×</span></button>
+    </form>
+
+    <div class="inspiration-results-bar"><p id="inspiration-results" role="status" aria-live="polite" aria-atomic="true"></p></div>
+    <div id="inspiration-grid" class="inspiration-grid" aria-label="ADØP ilham düzenleri"></div>
+    <div id="inspiration-empty" class="inspiration-empty" hidden><p>Bu seçimde bir düzen bulunamadı.</p><button type="button" id="inspiration-empty-reset">Tüm düzenleri göster <span aria-hidden="true">↗</span></button></div>
+    <div id="inspiration-more-area" class="inspiration-more-area" hidden><p id="inspiration-progress"></p><button id="inspiration-more" class="inspiration-more" type="button">Daha fazla göster <span aria-hidden="true">+</span></button></div>
+    <noscript><p class="inspiration-noscript">İlham düzenlerini görmek için tarayıcında JavaScript’i etkinleştir.</p></noscript>
+  </main>
+
+  <footer class="site-footer">
+    <a class="site-footer-brand" href="anasayfa.html" aria-label="ADØP ana sayfa">ADØP</a><span class="site-footer-signoff">adapt to you.</span>
+    <nav class="site-footer-links" aria-label="Alt menü"><a href="moduller.html">Modüller</a><a href="kombinasyonlar.html">Kombinasyonlar</a><a href="ilham.html" aria-current="page">İlham</a><a href="index.html">Kendin tasarla ↗</a></nav>
+  </footer>
+
+  <dialog id="inspiration-viewer" class="inspiration-viewer" aria-labelledby="inspiration-viewer-title" aria-describedby="inspiration-viewer-width">
+    <div class="inspiration-viewer-shell">
+      <div class="inspiration-viewer-image-wrap">
+        <img id="inspiration-viewer-image" width="1120" height="1400" alt="" decoding="async">
+        <button id="inspiration-prev" class="inspiration-viewer-arrow inspiration-viewer-prev" type="button" aria-label="Önceki düzen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+        <button id="inspiration-next" class="inspiration-viewer-arrow inspiration-viewer-next" type="button" aria-label="Sonraki düzen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+        <span id="inspiration-viewer-count" class="inspiration-viewer-count" aria-live="polite" aria-atomic="true"></span>
+      </div>
+      <div class="inspiration-viewer-details">
+        <button id="inspiration-close" class="inspiration-viewer-close" type="button" aria-label="Görseli kapat" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+        <div class="inspiration-viewer-heading"><p id="inspiration-viewer-number" class="inspiration-viewer-number"></p><h2 id="inspiration-viewer-title"></h2><p id="inspiration-viewer-width" class="inspiration-viewer-width"></p></div>
+        <dl id="inspiration-viewer-finishes" class="inspiration-viewer-finishes"></dl>
+        <a id="inspiration-design" class="inspiration-design" href="index.html">Bu düzeni tasarla <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../inspiration-data.js?v=inspiration-500-1" data-inspiration-source></script>
+  <script src="../inspiration.js?v=inspiration-500-1"></script>
+  <script src="customer-site.js?v=inspiration-1"></script>
+</body>
+</html>

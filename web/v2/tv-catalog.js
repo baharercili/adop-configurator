@@ -1,0 +1,12 @@
+(function(global){
+'use strict';
+function normalizeQuery(value){return typeof value==='string'?value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('tr-TR').replace(/ı/g,'i').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' '):'';}
+const source=global.AdopTVModels||{},seen=new Set();
+const models=Object.freeze((Array.isArray(source.models)?source.models:[]).filter(m=>m&&typeof m.id==='string'&&m.id.length<=120&&/^[a-z0-9][a-z0-9-]*$/.test(m.id)&&typeof m.brand==='string'&&typeof m.model==='string'&&Number.isFinite(m.inch)&&m.inch>=5&&m.inch<=150&&Number.isFinite(m.widthCm)&&m.widthCm>1&&m.widthCm<=500&&Number.isFinite(m.heightCm)&&m.heightCm>1&&m.heightCm<=400&&Number.isFinite(m.depthCm)&&m.depthCm>0&&m.depthCm<=200&&typeof m.sourceUrl==='string'&&m.sourceUrl.startsWith('https://')).filter(m=>{if(seen.has(m.id))return false;seen.add(m.id);return true;}).map(m=>Object.freeze({...m,aliases:Object.freeze((Array.isArray(m.aliases)?m.aliases:[]).filter(a=>typeof a==='string').slice())})));
+const byId=new Map(models.map(m=>[m.id,m]));
+const index=models.map(model=>({model,brand:normalizeQuery(model.brand),terms:[model.brand+' '+model.model,model.model,...model.aliases].map(normalizeQuery).map(s=>s.replace(/ /g,''))}));
+const brands=Object.freeze([...new Set(models.map(m=>m.brand))].sort((a,b)=>a.localeCompare(b,'tr')));
+function get(id){return typeof id==='string'?byId.get(id)||null:null;}
+function search(query,options){const o=options&&typeof options==='object'?options:{},q=normalizeQuery(query),compact=q.replace(/ /g,''),tokens=q.split(' ').filter(Boolean),brand=normalizeQuery(o.brand),requested=typeof o.limit==='number'?o.limit:50,limit=Number.isFinite(requested)?Math.max(0,Math.min(100,Math.floor(requested))):50;return index.filter(row=>(!brand||row.brand===brand)&&tokens.every(token=>row.terms.some(term=>term.includes(token)))).map(row=>({model:row.model,score:!compact?3:row.terms.some(term=>term===compact)?0:row.terms.some(term=>term.startsWith(compact))?1:2})).sort((a,b)=>a.score-b.score||a.model.brand.localeCompare(b.model.brand,'tr')||a.model.model.localeCompare(b.model.model,'tr', {numeric:true})).slice(0,limit).map(row=>row.model);}
+const api=Object.freeze({models,brands,updatedAt:typeof source.updatedAt==='string'?source.updatedAt:'',get,search,normalizeQuery});global.AdopTVCatalog=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
+})(typeof window!=='undefined'?window:globalThis);

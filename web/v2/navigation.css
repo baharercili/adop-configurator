@@ -1,0 +1,12 @@
+/* Four product navigation tabs remain available at narrow widths. */
+@media(max-width:900px){
+ body:not(.studio-v2)>header{height:112px;min-height:112px;display:grid;grid-template-columns:1fr auto;grid-template-rows:44px 48px;align-items:center;gap:0 12px;padding:12px 20px 8px}
+ body:not(.studio-v2)>header .brand{grid-column:1;grid-row:1;font-size:28px;letter-spacing:6px;margin:0}
+ body:not(.studio-v2)>header .brand span{font-size:8px;letter-spacing:2px;margin-top:7px}
+ body:not(.studio-v2)>header nav,body:not(.studio-v2)>header .config-nav{grid-row:2;grid-column:1/-1;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0;border:0;overflow:visible;flex-wrap:nowrap;margin:0}
+ body:not(.studio-v2)>header nav a,body:not(.studio-v2)>header nav a[aria-current]{display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-size:12px;line-height:1.25;white-space:nowrap;text-decoration:none;flex-shrink:0}
+ body:not(.studio-v2)>header nav a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+ body:not(.studio-v2)>header #saved{grid-column:2;grid-row:1;min-height:44px;font-size:12px;padding:8px 0 8px 12px}
+ body:not(.studio-v2)>header .nav-label-full{display:none}body:not(.studio-v2)>header .nav-label-compact{display:inline}
+}
+@media(max-width:360px){body:not(.studio-v2)>header{padding-left:16px;padding-right:16px}body:not(.studio-v2)>header nav a,body:not(.studio-v2)>header nav a[aria-current]{font-size:11px;letter-spacing:-.15px}}

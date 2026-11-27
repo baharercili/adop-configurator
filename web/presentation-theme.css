@@ -1,0 +1,110 @@
+/* ADØP presentation identity. Original interface only; the v2 edition keeps its own design. */
+body:not(.studio-v2){
+ --adop-paper:#ececec;--adop-panel:#e4e4e4;--adop-ink:#242424;--adop-muted:#606060;
+ --adop-line:#b8b8b8;--adop-outline:#454545;
+ background:var(--adop-paper);color:var(--adop-ink);
+ -webkit-font-smoothing:antialiased;
+}
+body.landing-page:not(.studio-v2){--home-ink:#242424;--home-muted:#606060;--home-accent:#242424;--home-line:#b8b8b8;--home-surface:#e4e4e4}
+body.modules-page.category-page:not(.studio-v2){--catalog-ink:#242424;--catalog-muted:#606060;--catalog-accent:#242424;--catalog-line:#b8b8b8;--catalog-art:#e4e4e4;--catalog-card:transparent}
+body:not(.studio-v2) .home-module-shop{--hm-ink:#242424;--hm-muted:#606060;--hm-accent:#242424;--hm-art:#e4e4e4;--hm-bg:#ececec}
+
+/* Quiet neutral chrome, with the thin capsules used in the presentation. */
+body:not(.studio-v2)>header{background:var(--adop-paper);border-color:var(--adop-line)}
+body:not(.studio-v2)>header .brand{font-family:'DM Sans',sans-serif;font-weight:500;color:var(--adop-ink)}
+body:not(.studio-v2)>header .brand span{font-weight:400}
+body:not(.studio-v2)>header nav{gap:8px}
+body:not(.studio-v2)>header nav a{min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:9px 17px;border:1px solid transparent;border-radius:999px;font-weight:500;color:var(--adop-ink);text-decoration:none}
+body:not(.studio-v2)>header nav a:hover{border-color:var(--adop-line)}
+body:not(.studio-v2)>header nav a[aria-current]{border-color:var(--adop-outline);text-decoration:none}
+body:not(.studio-v2) footer{color:var(--adop-muted);border-color:var(--adop-line);background:var(--adop-paper)}
+body:not(.studio-v2) footer a{color:var(--adop-ink)}
+body:not(.studio-v2) :where(button,a,input,select,summary):focus-visible{outline:2px solid var(--adop-ink);outline-offset:4px}
+body:not(.studio-v2) :where(input[type=checkbox],input[type=range]){accent-color:var(--adop-ink)}
+body:not(.studio-v2) .eyebrow{display:inline-flex;align-items:center;max-width:100%;padding:7px 13px;border:1px solid var(--adop-outline);border-radius:999px;font-weight:600;letter-spacing:.09em;line-height:1.4;color:var(--adop-ink)}
+
+/* Bold, direct typography. Font sizes in the animated hero are intentionally preserved. */
+body:not(.studio-v2) :is(.home-main h1,.home-main h2,.hero-copy h1,.results-heading h2,.catalog-heading h1,.product-info h1,.catalog-ending h2,.module-value h2){font-family:'DM Sans',sans-serif;font-weight:800;letter-spacing:-.055em;color:var(--adop-ink)}
+body:not(.studio-v2) :is(.home-process-grid h3,.hm-card h3,.module-card h2,.combo-title h3,.detail-info h2,.builder-head h2){font-family:'DM Sans',sans-serif;font-weight:700;letter-spacing:-.035em;color:var(--adop-ink)}
+body.modules-page.category-page:not(.studio-v2) .catalog-heading h1{font-family:'DM Sans',sans-serif;font-weight:800;letter-spacing:-.055em}
+body.modules-page.category-page:not(.studio-v2) .module-card h2{font-family:'DM Sans',sans-serif;font-weight:700;letter-spacing:-.035em}
+body:not(.studio-v2) :is(.home-main p,.combo-content>p,.catalog-ending p,.detail-info>p,.product-info>p,.module-card .card-description,.builder p){color:var(--adop-muted)}
+body:not(.studio-v2) :is(.home-main a,.back-link,.card-bottom a,.combo-bottom a,.detail-button,.catalog-heading>a,.text-link){color:var(--adop-ink)}
+body:not(.studio-v2) :is(.card-price,.card-bottom strong,.hm-price,.combo-title .price,.product-price strong,.detail-total strong){font-family:'DM Sans',sans-serif;font-weight:600;color:var(--adop-ink)}
+body:not(.studio-v2) :is(.card-dimension,.family-label,.combo-tag,.combo-image-footer,.material-line,.material-help,.sku-explanation,.sku-line code,.card-sku,.product-price span,.product-field,.product-visual>p,.results-meta,.library-pagination p,.library-pagination label,#page-total,.library-search>label,.library-search p,.library-filters>summary,.filter-fields label,.category-status){color:var(--adop-muted)}
+
+/* Flat presentation panels frame the product without recolouring any material sample. */
+body:not(.studio-v2) :is(.hero-visual,.combo-image,.detail-visual,.product-image,.module-card-image,.catalog-category-art,.hm-art,.preview){background:var(--adop-panel);border-radius:0}
+body.modules-page.category-page:not(.studio-v2) :is(.module-card,.module-card-image,.catalog-category-art){border-radius:0}
+body:not(.studio-v2) :is(.home-story-render,.home-process-grid>li,.home-move-demo){border-radius:0}
+body:not(.studio-v2) :is(.home-section,.catalog-toolbar,.library-filters,.library-pagination,.combo-bottom,.card-bottom,.sku-line,.product-info details,.detail-facts,.component-details,.catalog-ending,.catalog-technical){border-color:var(--adop-line)}
+body:not(.studio-v2) .home-process-grid>li{border:1px solid var(--adop-line);background:transparent}
+body:not(.studio-v2) .home-process-grid h3{line-height:1.2}
+body:not(.studio-v2) .home-step{display:inline-flex;align-items:center;justify-content:center;width:44px;min-height:29px;border:1px solid var(--adop-outline);border-radius:999px;color:var(--adop-ink);font-weight:600}
+body:not(.studio-v2) .home-main .home-button{border-radius:999px;border-color:var(--adop-ink);background:var(--adop-ink);color:var(--adop-paper);font-weight:600}
+body:not(.studio-v2) .home-main .home-button:hover{background:#424242}
+body:not(.studio-v2) .home-wall-form .home-wall-entry{border:1px solid var(--adop-outline);border-radius:999px;background:transparent;padding-left:24px;padding-right:22px}
+body:not(.studio-v2) .home-wall-form input{font-weight:600;letter-spacing:-.04em;color:var(--adop-ink)}
+body:not(.studio-v2) .home-wall-form button{color:var(--adop-ink);font-weight:600}
+body:not(.studio-v2) :is(.home-motion-toggle,.home-move-toggle,.hm-controls button,.circle-link,.favorite-button,.dialog-close){border:1px solid var(--adop-outline);border-radius:50%;color:var(--adop-ink);background:var(--adop-paper)}
+body:not(.studio-v2) .favorite-button[aria-pressed=true]{border-color:var(--adop-ink);background:var(--adop-ink);color:var(--adop-paper)}
+
+/* Catalogue and combination controls remain the same controls and retain their touch sizes. */
+body:not(.studio-v2) :is(.category-filters,.family-filters){gap:8px}
+body:not(.studio-v2) :is(.category-filters button,.family-filters button,.wall-presets button){border:1px solid var(--adop-outline);border-radius:999px;background:transparent;color:var(--adop-ink);padding:10px 16px;line-height:1.3;font-weight:500;box-shadow:none}
+body:not(.studio-v2) :is(.category-filters button[aria-pressed=true],.family-filters button[aria-pressed=true],.wall-presets button[aria-pressed=true]){border-color:var(--adop-ink);background:var(--adop-ink);color:var(--adop-paper);box-shadow:none}
+body:not(.studio-v2) .category-filters button:disabled{background:transparent;color:var(--adop-muted);border-color:var(--adop-line)}
+body:not(.studio-v2) :is(.sort-controls select,.filter-fields select,.catalog-search input,.catalog-search select,.product-field select,.library-search input,.library-pagination input){background:transparent;color:var(--adop-ink);border:1px solid var(--adop-line);border-radius:999px;padding-left:16px;padding-right:16px}
+body:not(.studio-v2) :is(.catalog-search input,.library-search input)::placeholder{color:var(--adop-muted)}
+body:not(.studio-v2) .wall-picker--bar .measurement-input{background:transparent;border:1px solid var(--adop-outline);border-radius:999px;padding-left:24px;padding-right:16px}
+body:not(.studio-v2) .wall-picker--bar .measurement-input input{color:var(--adop-ink);font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:-.04em}
+body:not(.studio-v2) .wall-picker--bar .measurement-input :is(button,span){color:var(--adop-ink)}
+body:not(.studio-v2) .wall-picker--bar .measurement-input .clear-measurement{border-left-color:var(--adop-line)}
+body:not(.studio-v2) .combo-facts>span{color:var(--adop-muted);border-color:var(--adop-line);border-radius:999px}
+body:not(.studio-v2) :is(.product-views button,.detail-views button){border:1px solid transparent;border-radius:999px;color:var(--adop-muted);padding-left:15px;padding-right:15px}
+body:not(.studio-v2) :is(.product-views button[aria-pressed=true],.detail-views button[aria-pressed=true]){border-color:var(--adop-outline);color:var(--adop-ink)}
+body:not(.studio-v2) :is(.product-primary,.solid-link,.primary){border:1px solid var(--adop-ink);border-radius:999px;background:var(--adop-ink);color:var(--adop-paper);font-weight:600}
+body:not(.studio-v2) :is(.outline-button,.library-pagination button,.product-options-jump,.secondary){border:1px solid var(--adop-outline);border-radius:999px;background:transparent;color:var(--adop-ink)}
+body:not(.studio-v2) #combo-dialog{background:var(--adop-paper);color:var(--adop-ink);box-shadow:0 20px 100px #00000024;border-radius:0}
+body:not(.studio-v2) :is(.adapt-message,.adapt-value,#empty-state){color:var(--adop-ink);background:var(--adop-panel)}
+
+/* The editor inherits the identity without changing its workspace, preview or controls. */
+body.configurator-page:not(.studio-v2) .builder{background:var(--adop-paper)}
+body.configurator-page:not(.studio-v2) :is(.step,.summary,.size-strip,.module){border-color:var(--adop-line)}
+body.configurator-page:not(.studio-v2) :is(.module-fields select,.module-position,.full-select){background:transparent;color:var(--adop-ink);border-color:var(--adop-line);border-radius:999px}
+body.configurator-page:not(.studio-v2) :is(.preset,.add){border-color:var(--adop-line);border-radius:12px;background:transparent}
+body.configurator-page:not(.studio-v2) .preset[aria-pressed=true]{border-color:var(--adop-ink);background:var(--adop-panel)}
+body.configurator-page:not(.studio-v2) .segmented{border-color:var(--adop-outline);border-radius:999px}
+body.configurator-page:not(.studio-v2) .segmented button[aria-pressed=true]{background:var(--adop-ink);color:var(--adop-paper)}
+body.configurator-page:not(.studio-v2) .viewbuttons{background:var(--adop-paper);border-color:var(--adop-outline)}
+body.configurator-page:not(.studio-v2) .viewbuttons button[aria-pressed=true]{background:var(--adop-ink);color:var(--adop-paper)}
+@media(max-width:900px){
+ body:not(.studio-v2)>header nav{gap:3px}
+ body:not(.studio-v2)>header nav a,body:not(.studio-v2)>header nav a[aria-current]{min-height:40px;padding:8px 10px;font-size:12px;letter-spacing:-.02em}
+ body.configurator-page.mobile-editor-active:not(.studio-v2){--me-bg:#ececec;--me-surface:#ececec;--me-preview:#e4e4e4;--me-soft:#e0e0e0;--me-ink:#242424;--me-muted:#606060;--me-line:#b8b8b8;--me-accent:#242424;--me-accent-soft:#dedede;--me-on-accent:#fff;--me-radius:8px;font-family:'DM Sans',sans-serif}
+ body.configurator-page:not(.studio-v2) :is(.me-title,.me-section-head h2,.me-section-head h3,.me-picker-head h2){font-weight:800}
+ body.configurator-page:not(.studio-v2) :is(.me-chip,.me-picker-tabs button,.me-position-actions button,.me-secondary,.me-summary-actions button){border-radius:999px}
+ body.configurator-page:not(.studio-v2) .me-card{box-shadow:none}
+ body.configurator-page:not(.studio-v2) .me-product-card{border-radius:8px}
+}
+@media(max-width:740px){
+ body:not(.studio-v2) .home-wall-form .home-wall-entry{padding-left:18px;padding-right:15px}
+ body:not(.studio-v2) .home-main h2{letter-spacing:-.045em}
+ body:not(.studio-v2) .category-filters button{padding:10px 14px}
+ body:not(.studio-v2) .wall-picker--bar .measurement-input{padding-left:19px;padding-right:10px}
+ body:not(.studio-v2) .product-views button{padding-left:10px;padding-right:10px}
+}
+@media(max-width:360px){
+ body:not(.studio-v2)>header nav a,body:not(.studio-v2)>header nav a[aria-current]{font-size:11px;padding-left:7px;padding-right:7px}
+}
+/* The reference uses a single ink colour, including emphasis and fit diagrams. */
+body.combinations-page:not(.studio-v2) :is(.hero-copy h1 em,.hero-copy>p,.hero-note,.number-mark,.adapt-story p,.hero-visual-top,#hero-status,#hero-width,.hero-visual-bottom,.wall-labels,.wall-fit-summary,.detail-materials,.material-help){color:var(--adop-ink)}
+body.combinations-page:not(.studio-v2) .wall-diagram{color:var(--adop-ink)}
+body.combinations-page:not(.studio-v2) .wall-rail>span{background:var(--adop-ink);border-color:var(--adop-ink)}
+body.combinations-page:not(.studio-v2) :is(.text-link,.adapt-story,.hero-note){border-color:var(--adop-line)}
+
+body.combinations-page:not(.studio-v2) .wall-labels>span:nth-child(2){color:var(--adop-ink)}
+body.configurator-page:not(.studio-v2) .intro h1{font-family:'DM Sans',sans-serif;font-weight:800;color:var(--adop-ink)}
+body.configurator-page:not(.studio-v2) :is(.material-channel select,.tv-position-fields input){background:transparent;color:var(--adop-ink);border-color:var(--adop-line);border-radius:999px}
+body.configurator-page:not(.studio-v2) .desktop-tv-shortcut{background:var(--adop-paper);color:var(--adop-ink);border-color:var(--adop-outline);border-radius:999px}
+@media(max-width:900px){body:not(.studio-v2)>header nav a,body:not(.studio-v2)>header nav a[aria-current]{min-height:48px}}

@@ -1,0 +1,32 @@
+name: Site kontrolleri
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Sayfaları, kodu ve 500 görseli kontrol et
+        run: node scripts/check.mjs
+      - name: GitHub Pages için oluştur
+        run: node scripts/build.mjs --base /adop-configurator
+      - name: Oluşturulan sayfaları kontrol et
+        run: node scripts/check.mjs --built
+      - name: Hazır siteyi sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: adop-website
+          path: _site
+          retention-days: 7
+

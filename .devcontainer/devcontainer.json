@@ -1,0 +1,13 @@
+{
+  "name": "ADØP Studio",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "forwardPorts": [4173],
+  "portsAttributes": {
+    "4173": {
+      "label": "ADØP web sitesi",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postStartCommand": "nohup node scripts/serve.mjs --dir web --port 4173 > /tmp/adop-preview.log 2>&1 &"
+}
+

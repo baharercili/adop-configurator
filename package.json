@@ -1,0 +1,16 @@
+{
+  "name": "adop-configurator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ADØP static furniture configurator and inspiration gallery",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "npm run check && npm run build && node scripts/check.mjs --built",
+    "dev": "node scripts/serve.mjs --dir web",
+    "preview": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs"
+  }
+}

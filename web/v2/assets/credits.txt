@@ -1,0 +1,6 @@
+Oak Veneer 01 — Jenelle van Heerden / Poly Haven
+Source: https://polyhaven.com/a/oak_veneer_01
+License: CC0 — https://polyhaven.com/license
+Immutable source: oak-veneer-scan.jpg, 2048 × 2048 px, rotated 90 degrees for horizontal grain.
+Runtime derivatives start from this original scan: light oak retains the source hue with a warm correction; broad colour bands are reduced while fine grain is preserved; dark oak uses a neutral brown tone. No image resynthesis or source overwrite. Tone separation is derived directly from the immutable master at full resolution.
+Shared planar veneer mapping uses centimetres and each panel's physical long axis. Fine roughness and high-pass pore maps are generated in memory from the scan; bump scale is 0.008 cm. No displacement.
